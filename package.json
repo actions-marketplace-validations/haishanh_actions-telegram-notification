@@ -14,7 +14,7 @@
     "format": "prettier --write **/*.ts",
     "lint": "eslint src/**/*.ts",
     "prepare": "esbuild src/main.ts --bundle --minify --platform=node --target=node24 --outfile=dist/main.js",
-    "local": "NODE_ENV=development node --inspect=5858 --require ts-node/register src/local.ts"
+    "local": "NODE_ENV=development tsx --inspect=5858 src/local.ts"
   },
   "repository": {
     "type": "git",
@@ -27,26 +27,26 @@
     "notification"
   ],
   "dependencies": {
-    "@actions/core": "1.10.1",
-    "@actions/github": "6.0.0",
-    "axios": "1.6.8",
-    "jsonwebtoken": "^9.0.2"
+    "@actions/core": "3.0.1",
+    "@actions/github": "9.1.1",
+    "axios": "1.18.0",
+    "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
-    "@octokit/webhooks": "13.1.1",
-    "@tsconfig/node24": "^24.0.1",
-    "@types/jsonwebtoken": "9.0.6",
-    "@types/node": "^24.0.7",
-    "@typescript-eslint/eslint-plugin": "7.4.0",
-    "@typescript-eslint/parser": "7.4.0",
-    "dotenv": "16.4.5",
-    "esbuild": "0.20.2",
-    "eslint": "8.57.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-simple-import-sort": "^12.0.0",
-    "js-yaml": "4.1.0",
-    "prettier": "3.2.5",
-    "tsx": "4.7.1",
-    "typescript": "5.4.3"
+    "@octokit/webhooks": "14.2.0",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/jsonwebtoken": "9.0.10",
+    "@types/node": "^25.9.3",
+    "@typescript-eslint/eslint-plugin": "8.61.1",
+    "@typescript-eslint/parser": "8.61.1",
+    "dotenv": "17.4.2",
+    "esbuild": "0.28.1",
+    "eslint": "10.5.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "js-yaml": "4.2.0",
+    "prettier": "3.8.4",
+    "tsx": "4.22.4",
+    "typescript": "6.0.3"
   }
 }
