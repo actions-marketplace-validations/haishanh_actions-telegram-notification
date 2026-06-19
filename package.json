@@ -13,7 +13,7 @@
     "do": "DEBUG=script:* tsx",
     "format": "prettier --write **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "prepare": "esbuild src/main.ts --bundle --minify --platform=node --target=node20 --outfile=dist/main.js",
+    "prepare": "esbuild src/main.ts --bundle --minify --platform=node --target=node24 --outfile=dist/main.js",
     "local": "NODE_ENV=development node --inspect=5858 --require ts-node/register src/local.ts"
   },
   "repository": {
@@ -34,9 +34,9 @@
   },
   "devDependencies": {
     "@octokit/webhooks": "13.1.1",
-    "@tsconfig/node20": "20.1.4",
+    "@tsconfig/node24": "^24.0.1",
     "@types/jsonwebtoken": "9.0.6",
-    "@types/node": "20.12.2",
+    "@types/node": "^24.0.7",
     "@typescript-eslint/eslint-plugin": "7.4.0",
     "@typescript-eslint/parser": "7.4.0",
     "dotenv": "16.4.5",
