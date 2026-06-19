@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import ky, { HTTPError, KyInstance } from 'ky';
 
 const tgbBaseUrl = 'https://tgb.vercel.app/api/tgproxy/v1';
 
@@ -26,69 +26,67 @@ type SendPhotoParams = {
 export class TelegramService {
   constructor(botToken: string | null, jwt: string | undefined) {
     if (typeof botToken === 'string' && botToken !== '') {
-      this.axios = axios.create({
+      this.ky = ky.create({
+        prefix: 'https://api.telegram.org/bot' + botToken,
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      this.baseUrl = 'https://api.telegram.org/bot' + botToken;
     } else if (typeof jwt === 'string' && jwt !== '') {
-      this.axios = axios.create({
+      this.ky = ky.create({
+        prefix: tgbBaseUrl,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${jwt}`,
         },
       });
-      this.baseUrl = tgbBaseUrl;
     } else {
       throw new Error('botToken or jwt is needed');
     }
   }
 
-  private baseUrl: string;
-  private axios: AxiosInstance;
+  private ky: KyInstance;
 
   async sendPhoto(body: SendPhotoParams) {
-    const { baseUrl } = this;
-    const url = `${baseUrl}/sendPhoto`;
     try {
-      await this.axios.post(url, {
-        parse_mode: 'MarkdownV2',
-        ...body,
-      });
+      await this.ky
+        .post('sendPhoto', {
+          json: {
+            parse_mode: 'MarkdownV2',
+            ...body,
+          },
+        })
+        .text();
     } catch (e: unknown) {
-      if (e instanceof AxiosError) {
-        this.handleAPIError(e);
-      }
-      throw e;
+      await this.handleAPIError(e);
     }
   }
 
   async sendMessage(body: SendMessageParams) {
-    const { baseUrl } = this;
-    const url = `${baseUrl}/sendMessage`;
     try {
-      await this.axios.post(url, {
-        parse_mode: 'MarkdownV2',
-        ...body,
-      });
+      await this.ky
+        .post('sendMessage', {
+          json: {
+            parse_mode: 'MarkdownV2',
+            ...body,
+          },
+        })
+        .text();
     } catch (e: unknown) {
-      if (e instanceof AxiosError) {
-        this.handleAPIError(e);
-      }
-      throw e;
+      await this.handleAPIError(e);
     }
   }
 
-  handleAPIError(e: AxiosError) {
-    if (e.response) {
-      const msg = JSON.stringify(e.response.data);
-      // I am lazy :(
+  async handleAPIError(e: unknown): Promise<never> {
+    if (e instanceof HTTPError) {
+      const msg = await e.response.text();
       throw new Error(`${e.response.status}:${msg}`);
-    } else if (e.request) {
-      // network error
-      throw new Error(`network:error:${e.code}`);
     }
+
+    if (e instanceof Error) {
+      throw new Error(`network:error:${e.name}`);
+    }
+
     throw e;
   }
 }

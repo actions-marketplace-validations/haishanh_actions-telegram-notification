@@ -29,8 +29,8 @@
   "dependencies": {
     "@actions/core": "3.0.1",
     "@actions/github": "9.1.1",
-    "axios": "1.18.0",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "ky": "^2.0.2"
   },
   "devDependencies": {
     "@octokit/webhooks": "14.2.0",
