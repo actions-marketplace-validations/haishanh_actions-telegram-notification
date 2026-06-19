@@ -30,7 +30,7 @@ Note that GitHub Actions Notification bot is not a GitHub official one, the sour
 
 ```bash
 # install deps
-yarn
+pnpm i
 ```
 
 ### Smoke Test
@@ -45,5 +45,5 @@ CHAT_ID="your chat id"
 ```
 
 ```bash
-yarn do ./src/local.ts
+pnpm run local
 ```
